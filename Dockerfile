@@ -13,6 +13,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     jq \
     libcurl4 \
     libicu66 \
+    libunwind8 \
+    libssl1.1 \
+    netcat \
     gpg-agent \
     software-properties-common \
     unzip \
@@ -77,9 +80,20 @@ ENV yarn=/usr/bin/yarn
 ENV aws=/usr/local/bin/aws
 ENV azurecli=/usr/bin/az
 
+ARG TARGETARCH=amd64
+ARG AGENT_VERSION=2.185.1
+
+WORKDIR /azp
+RUN if [ "$TARGETARCH" = "amd64" ]; then \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-x64-${AGENT_VERSION}.tar.gz; \
+    else \
+      AZP_AGENTPACKAGE_URL=https://vstsagentpackage.azureedge.net/agent/${AGENT_VERSION}/vsts-agent-linux-${TARGETARCH}-${AGENT_VERSION}.tar.gz; \
+    fi; \
+    curl -LsS "$AZP_AGENTPACKAGE_URL" | tar -xz
+
 COPY ./start.sh .
 RUN chmod +x start.sh
-CMD ["./start.sh"]
+ENTRYPOINT ["./start.sh"]
 
 #CMD ["/bin/bash"]
 
