@@ -65,9 +65,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 SHELL ["/usr/bin/pwsh", "-c", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-RUN Install-Module -Name AWSPowerShell.NetCore -Force
-RUN Install-Module -Name AzureRM.NetCore -Force
+RUN Install-Module -Name AWSPowerShell.NetCore -RequiredVersion 4.1.12.0 -Force
+RUN Install-Module -Name AzureRM.NetCore -RequiredVersion 0.13.2 -Force
 SHELL ["/bin/sh", "-c"]
+
+RUN mkdir -p ${HOME}/.config/powershell
+RUN echo "Import-Module AWSPowerShell.NetCore" > ${HOME}/.config/powershell/Microsoft.PowerShell_profile.ps1
 
 # Environment variables, so that Azure Devops can pick up the binaries as agent capabilities
 ENV yarn=/usr/bin/yarn
@@ -76,6 +79,7 @@ ENV azurecli=/usr/bin/az
 
 COPY ./start.sh .
 RUN chmod +x start.sh
-#CMD ["./start.sh"]
-CMD ["/bin/bash"]
+CMD ["./start.sh"]
+
+#CMD ["/bin/bash"]
 
