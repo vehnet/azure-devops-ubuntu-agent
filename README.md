@@ -18,7 +18,7 @@ docker build -t azure-devops-ubuntu-agent .
 
 `EdinburghOffice` is the default pool that we are currently using for generic linux agents, change if required.
 
-docker run -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=<PAT token> -e azure-devops-docker-agent dockeragent:latest
+docker run -d -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=<PAT token> -e AZP_POOL=EdinburghOffice azure-devops-docker-agent
 
 ### Using an Android emulator
 `--device /dev/kvm` # allow access to hardware virtualisation
@@ -27,6 +27,6 @@ docker run -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=<PAT token> -
 `-v /dev/bus/usb:/dev/bus/usb` # allow access to USB interface
 
 ```
-docker run -d --restart unless-stopped --privileged -v /dev/bus/usb:/dev/bus/usb --device /dev/kvm -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=XXXXXX -e AZP_POOL=EdinburghOffice azure-devops-ubuntu-agent
+docker run -d --restart unless-stopped --privileged -v /dev/bus/usb:/dev/bus/usb --device /dev/kvm -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=XXXXXX -e AZP_POOL=EdinburghOffice azure-devops-ubuntu-agent
 
 ```
