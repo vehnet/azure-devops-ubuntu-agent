@@ -63,12 +63,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     powershell \
     dotnet-sdk-2.1 \
     dotnet-sdk-3.1 \
-    dotnet-sdk-5.0
+    dotnet-sdk-5.0 \
+    dotnet-sdk-6.0
 
 RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 SHELL ["/usr/bin/pwsh", "-c", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
-RUN Install-Module -Name AWSPowerShell.NetCore -RequiredVersion 4.1.12.0 -Force
+RUN Install-Module -Name AWSPowerShell.NetCore -RequiredVersion 4.1.15.0 -Force
 RUN Install-Module -Name AzureRM.NetCore -RequiredVersion 0.13.2 -Force
 SHELL ["/bin/sh", "-c"]
 
@@ -80,8 +81,9 @@ ENV yarn=/usr/bin/yarn
 ENV aws=/usr/local/bin/aws
 ENV azurecli=/usr/bin/az
 
+# See versions https://github.com/Microsoft/azure-pipelines-agent/releases
 ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.185.1
+ARG AGENT_VERSION=2.196.2
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
