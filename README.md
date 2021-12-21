@@ -2,6 +2,7 @@
 
 This image contains all the necessary tooling to configure a build agent for Azure Devops
 
+Based on [these instructions](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/docker?view=azure-devops), but adapted to run on Ubuntu 20.04 with additional tools
 
 ## Prerequisites
 - Docker installed and configured on the host machine
@@ -11,11 +12,13 @@ This image contains all the necessary tooling to configure a build agent for Azu
 
 ```
 docker build -t azure-devops-ubuntu-agent .
-```
 
+```
 ## Run
 
 `EdinburghOffice` is the default pool that we are currently using for generic linux agents, change if required.
+
+docker run -e AZP_URL=https://vehnet.visualstudio.com -e AZP_TOKEN=<PAT token> -e azure-devops-docker-agent dockeragent:latest
 
 ### Using an Android emulator
 `--device /dev/kvm` # allow access to hardware virtualisation
