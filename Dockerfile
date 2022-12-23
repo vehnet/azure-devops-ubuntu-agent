@@ -27,6 +27,7 @@ RUN wget https://github.com/mikefarah/yq/releases/download/v4.2.0/yq_linux_amd64
     chmod +x /usr/bin/yq
 
 # Node and yarn
+ENV NODE_OPTIONS=--max-old-space-size=8192
 RUN curl -sSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN curl -sSL https://deb.nodesource.com/setup_16.x | bash -
