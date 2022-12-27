@@ -84,7 +84,7 @@ ENV azurecli=/usr/bin/az
 
 # See versions https://github.com/Microsoft/azure-pipelines-agent/releases
 ARG TARGETARCH=amd64
-ARG AGENT_VERSION=2.196.2
+ARG AGENT_VERSION=2.214.0
 
 WORKDIR /azp
 RUN if [ "$TARGETARCH" = "amd64" ]; then \
