@@ -33,7 +33,7 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN curl -sSL https://deb.nodesource.com/setup_16.x | bash -
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    nodejs \
+    nodejs=16.19.0-deb-1nodesource1 \
     yarn \
     python3-pip
 
