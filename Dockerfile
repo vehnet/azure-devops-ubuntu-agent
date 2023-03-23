@@ -51,12 +51,23 @@ RUN apt-get install -y --no-install-recommends \
     libasound2 \
     libxtst6 \
     xauth \
-    xvfb
+    xvfb \
+
+# Necessary to run vite in headless mode
+RUN apt-get install -y --no-install-recommends \
+    xdg-utils --fix-missing
 
 # AWS CLI
 RUN curl -L https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.1.37.zip -o awscliv2.zip
 RUN unzip -q awscliv2.zip
 RUN ./aws/install && rm -rf ./aws
+
+# AWS SAM CLI
+RUN wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -O aws-sam-cli.zip
+RUN unzip aws-sam-cli.zip -d sam-installation
+RUN ./sam-installation/install
+RUN rm aws-sam-cli.zip && rm -rf ./sam-installation
+RUN sam --version
 
 # .NET SDK + PowerShell Core
 RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
